@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Misi Rumah Rapi Si Budi - Cerita Interaktif Aturan Rumah untuk Siswa Kelas 2 SD. Belajar hak dan kewajiban di rumah melalui petualangan seru!">
+    <title>🏠 Misi Rumah Rapi Si Budi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ========== PARTICLE CONTAINER ========== -->
+    <div id="particles-container" aria-hidden="true"></div>
+
+    <!-- ========== AUDIO ELEMENTS ========== -->
+    <audio id="sfx-ding" preload="auto">
+        <source src="https://cdn.freesound.org/previews/536/536108_11943129-lq.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="sfx-buzz" preload="auto">
+        <source src="https://cdn.freesound.org/previews/362/362204_2595722-lq.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="sfx-tada" preload="auto">
+        <source src="https://cdn.freesound.org/previews/397/397354_4284968-lq.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bgm" loop preload="auto">
+        <source src="https://cdn.freesound.org/previews/612/612095_5674468-lq.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ========== MAIN GAME CONTAINER ========== -->
+    <div id="game-container">
+
+        <!-- ========== SCREEN: TITLE ========== -->
+        <section id="screen-title" class="screen active">
+            <div class="title-card">
+                <div class="title-icon-row">
+                    <span class="title-emoji bounce-anim">🏠</span>
+                    <span class="title-emoji bounce-anim delay-1">✨</span>
+                    <span class="title-emoji bounce-anim delay-2">🧹</span>
+                </div>
+                <h1 class="title-text">Misi Rumah Rapi<br><span class="title-highlight">Si Budi</span></h1>
+                <p class="title-subtitle">Cerita Interaktif • Aturan di Rumah</p>
+                <p class="title-desc">Bantu Budi membuat keputusan yang benar!<br>Setiap pilihan menentukan lencana yang kamu dapatkan.</p>
+                <div class="title-badges-preview">
+                    <div class="mini-badge gold">🥇 Emas</div>
+                    <div class="mini-badge silver">🥈 Perak</div>
+                    <div class="mini-badge bronze">📚 Belajar</div>
+                </div>
+                <button id="btn-start" class="btn-primary" onclick="startGame()">
+                    <span class="btn-icon">🚀</span> Mulai Petualangan!
+                </button>
+                <p class="title-credit">Kelas 2 SD • Tema: Hak & Kewajiban di Rumah</p>
+            </div>
+        </section>
+
+        <!-- ========== SCREEN: INTRO ========== -->
+        <section id="screen-intro" class="screen">
+            <div class="scene-container">
+                <div class="scene-bg" style="background-image: url('assets/kamar_berantakan.png')"></div>
+                <div class="scene-overlay"></div>
+                <div class="scene-content">
+                    <div class="narrator-box fade-in-up">
+                        <div class="narrator-avatar">📖</div>
+                        <div class="narrator-text">
+                            <p class="narrator-label">Narator</p>
+                            <p id="intro-text" class="narrator-dialog"></p>
+                        </div>
+                    </div>
+                    <div class="character-display">
+                        <img src="assets/budi_bingung.png" alt="Budi bingung" class="character-img float-anim" id="intro-char">
+                    </div>
+                    <button id="btn-next-intro" class="btn-primary" onclick="goToScene1()" style="display:none;">
+                        <span class="btn-icon">▶️</span> Lanjut ke Misi Pertama!
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SCREEN: SCENE 1 - DILEMA MAINAN ========== -->
+        <section id="screen-scene1" class="screen">
+            <div class="scene-container">
+                <div class="scene-bg" style="background-image: url('assets/kamar_berantakan.png')"></div>
+                <div class="scene-overlay"></div>
+                <div class="scene-content">
+                    <div class="scene-header">
+                        <div class="scene-badge">Misi 1</div>
+                        <h2 class="scene-title">Dilema Mainan Pagi Hari</h2>
+                    </div>
+
+                    <div class="dialog-box fade-in-up">
+                        <div class="dialog-character">
+                            <img src="assets/budi_bingung.png" alt="Budi bingung" class="dialog-avatar">
+                            <span class="dialog-name">Budi</span>
+                        </div>
+                        <p class="dialog-text">"Teman-temanku sudah menunggu di luar untuk bermain... tapi kamarku masih berantakan. Aduh, aku harus bagaimana ya?"</p>
+                    </div>
+
+                    <div class="friend-bubble slide-in-right">
+                        <span class="friend-emoji">🧒</span>
+                        <p>"Budi! Ayo cepat main! Kita mau main bola!"</p>
+                    </div>
+
+                    <div class="choices-container" id="choices-scene1">
+                        <button class="choice-btn choice-wrong" id="choice-1a" onclick="selectChoice(1, 'A')">
+                            <span class="choice-icon">🏃</span>
+                            <div class="choice-content">
+                                <span class="choice-label">Pilihan A</span>
+                                <span class="choice-text">Langsung pergi main! Nanti saja rapikannya.</span>
+                            </div>
+                        </button>
+                        <button class="choice-btn choice-right" id="choice-1b" onclick="selectChoice(1, 'B')">
+                            <span class="choice-icon">🧹</span>
+                            <div class="choice-content">
+                                <span class="choice-label">Pilihan B</span>
+                                <span class="choice-text">Rapikan mainan dulu (5 menit), baru pergi main.</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FEEDBACK LAYERS -->
+            <div id="feedback-1a" class="feedback-layer">
+                <div class="feedback-card feedback-wrong">
+                    <div class="feedback-icon-circle wrong">😥</div>
+                    <h3>Ups!</h3>
+                    <div class="feedback-visual">
+                        <img src="assets/kamar_berantakan.png" alt="Kamar berantakan" class="feedback-img">
+                    </div>
+                    <p class="feedback-text">Ketika pulang, Budi tidak bisa menemukan mainan kesukaannya. Kamar jadi makin berantakan dan Ibu menjadi sedih.</p>
+                    <p class="feedback-lesson">💡 <strong>Ingat:</strong> Merapikan kamar sebelum pergi adalah <em>kewajiban</em> kita di rumah.</p>
+                    <button class="btn-primary" onclick="closeFeedback('1a')">
+                        <span class="btn-icon">▶️</span> Lanjut ke Misi 2
+                    </button>
+                </div>
+            </div>
+
+            <div id="feedback-1b" class="feedback-layer">
+                <div class="feedback-card feedback-right">
+                    <div class="feedback-icon-circle right">🌟</div>
+                    <h3>Hebat!</h3>
+                    <div class="feedback-visual">
+                        <img src="assets/kamar_rapi.png" alt="Kamar rapi" class="feedback-img">
+                    </div>
+                    <p class="feedback-text">Budi merapikan kamarnya dalam 5 menit saja! Ketika pulang main, semua mainannya tersusun rapi dan mudah dicari. Ibu sangat bangga!</p>
+                    <div class="feedback-thumbs">
+                        <img src="assets/ibu_senang.png" alt="Ibu senang" class="feedback-char">
+                    </div>
+                    <p class="feedback-lesson">⭐ <strong>Kamu mendapatkan +1 poin!</strong></p>
+                    <button class="btn-primary" onclick="closeFeedback('1b')">
+                        <span class="btn-icon">▶️</span> Lanjut ke Misi 2
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SCREEN: SCENE 2 - DILEMA MAKAN SIANG ========== -->
+        <section id="screen-scene2" class="screen">
+            <div class="scene-container">
+                <div class="scene-bg" style="background-image: url('assets/meja_makan.png')"></div>
+                <div class="scene-overlay"></div>
+                <div class="scene-content">
+                    <div class="scene-header">
+                        <div class="scene-badge">Misi 2</div>
+                        <h2 class="scene-title">Dilema Makan Siang</h2>
+                    </div>
+
+                    <div class="dialog-box fade-in-up">
+                        <div class="dialog-character">
+                            <img src="assets/budi_bingung.png" alt="Budi bingung" class="dialog-avatar">
+                            <span class="dialog-name">Budi</span>
+                        </div>
+                        <p class="dialog-text">"Aku sudah selesai makan. Ibu sedang sibuk memasak untuk makan malam. Piringku masih di atas meja. Hmm..."</p>
+                    </div>
+
+                    <div class="thought-bubble fade-in-up delay-1">
+                        <p>💭 "Aku punya <strong>hak bermain</strong>, tapi <strong>kewajibanku merapikan meja</strong> setelah makan."</p>
+                    </div>
+
+                    <div class="choices-container" id="choices-scene2">
+                        <button class="choice-btn choice-wrong" id="choice-2a" onclick="selectChoice(2, 'A')">
+                            <span class="choice-icon">🍽️</span>
+                            <div class="choice-content">
+                                <span class="choice-label">Pilihan A</span>
+                                <span class="choice-text">Tinggalkan piring di meja, langsung nonton TV.</span>
+                            </div>
+                        </button>
+                        <button class="choice-btn choice-right" id="choice-2b" onclick="selectChoice(2, 'B')">
+                            <span class="choice-icon">🫧</span>
+                            <div class="choice-content">
+                                <span class="choice-label">Pilihan B</span>
+                                <span class="choice-text">Bawa piring ke tempat cuci piring.</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FEEDBACK LAYERS SCENE 2 -->
+            <div id="feedback-2a" class="feedback-layer">
+                <div class="feedback-card feedback-wrong">
+                    <div class="feedback-icon-circle wrong">😟</div>
+                    <h3>Ups!</h3>
+                    <p class="feedback-text">Ibu harus membereskan piring Budi padahal Ibu sudah sangat lelah memasak. Ibu menjadi kecewa karena Budi tidak membantu.</p>
+                    <div class="feedback-visual-inline">
+                        <div class="feedback-emoji-big">😔🍽️</div>
+                    </div>
+                    <p class="feedback-lesson">💡 <strong>Ingat:</strong> Membawa piring ke tempat cuci setelah makan adalah <em>kewajiban</em> kita di rumah. Ibu juga butuh dibantu!</p>
+                    <button class="btn-primary" onclick="closeFeedback('2a')">
+                        <span class="btn-icon">🏆</span> Lihat Hasil
+                    </button>
+                </div>
+            </div>
+
+            <div id="feedback-2b" class="feedback-layer">
+                <div class="feedback-card feedback-right">
+                    <div class="feedback-icon-circle right">💪</div>
+                    <h3>Hebat Budi!</h3>
+                    <p class="feedback-text">Budi membawa piringnya ke tempat cuci. Ibu tersenyum bangga dan berkata: "Terima kasih, Nak! Kamu anak yang bertanggung jawab!"</p>
+                    <div class="feedback-thumbs">
+                        <img src="assets/ibu_senang.png" alt="Ibu senang" class="feedback-char">
+                    </div>
+                    <p class="feedback-lesson">⭐ <strong>Kamu mendapatkan +1 poin!</strong> Ibu sangat senang!</p>
+                    <button class="btn-primary" onclick="closeFeedback('2b')">
+                        <span class="btn-icon">🏆</span> Lihat Hasil
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SCREEN: RESULT ========== -->
+        <section id="screen-result" class="screen">
+            <div class="result-container">
+                <div class="result-card" id="result-card">
+                    <div class="result-confetti" id="confetti-container"></div>
+                    <h2 class="result-title">Hasil Misi Budi!</h2>
+                    
+                    <div class="result-score-display">
+                        <div class="score-circle" id="score-circle">
+                            <span class="score-number" id="score-display">0</span>
+                            <span class="score-label">dari 2</span>
+                        </div>
+                    </div>
+
+                    <div class="result-badge-container" id="badge-container">
+                        <!-- Badge will be injected by JS -->
+                    </div>
+
+                    <div class="result-message" id="result-message">
+                        <!-- Message will be injected by JS -->
+                    </div>
+
+                    <div class="result-summary" id="result-summary">
+                        <!-- Summary will be injected by JS -->
+                    </div>
+
+                    <div class="result-key-message">
+                        <div class="key-msg-icon">🔑</div>
+                        <p><strong>Pesan Kunci:</strong><br>"Aku punya <em>hak</em> bermain, tapi <em>kewajibanku</em> merapikan rumah."</p>
+                    </div>
+
+                    <div class="result-actions">
+                        <button class="btn-primary" onclick="restartGame()">
+                            <span class="btn-icon">🔄</span> Main Lagi
+                        </button>
+                    </div>
+
+                    <div class="teacher-note">
+                        <p><strong>📋 Catatan Guru:</strong> Gunakan hasil lencana sebagai bahan diskusi kelas tentang hak dan kewajiban di rumah.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ========== SOUND TOGGLE ========== -->
+    <button id="sound-toggle" class="sound-btn" onclick="toggleSound()" aria-label="Toggle Sound">
+        <span id="sound-icon">🔊</span>
+    </button>
+
+    <!-- ========== PROGRESS BAR ========== -->
+    <div id="progress-bar-container">
+        <div id="progress-bar" style="width: 0%"></div>
+        <div class="progress-steps">
+            <div class="progress-step active" data-step="0">🏠</div>
+            <div class="progress-step" data-step="1">1</div>
+            <div class="progress-step" data-step="2">2</div>
+            <div class="progress-step" data-step="3">🏆</div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
